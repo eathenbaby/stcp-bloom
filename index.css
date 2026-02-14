@@ -1,0 +1,72 @@
+/* Reconstructed from Inspect Element Frames */
+:root {
+  /* Colors - Based on oklch values seen in DevTools */
+  --background: #f9f7f2; 
+  --foreground: #1a1a1a;
+  --muted: #f1f1f1;
+  --muted-foreground: #666666;
+  --accent: #f1f1f1;
+  --accent-foreground: #1a1a1a;
+  --border: #e2e2e2;
+
+  /* Typography */
+  --font-martian: "Martian Mono", monospace;
+  --font-serif: "Cormorant Garamond", serif;
+
+  /* Layout Constants */
+  --radius: 0.625rem;
+  --grid-gap: 1.5rem; /* Extracted 'gap-6' */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-martian);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply this class to every flower SVG/IMG */
+.flower-asset {
+  filter: url(#ink-jitter);
+  will-change: transform, filter;
+}
+
+/* Font classes */
+.font-martian {
+  font-family: var(--font-martian);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Layout utilities */
+.gap-6 {
+  gap: var(--grid-gap);
+}
+
+.rounded-lg {
+  border-radius: var(--radius);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--foreground);
+}
