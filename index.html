@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STCP Bloom | A Gesture of Intent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --base-color: #F9F7F2;
+      }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: var(--base-color);
+        font-family: 'Inter', sans-serif;
+        color: #1A1A1A;
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-cormorant {
+        font-family: 'Cormorant Garamond', serif;
+      }
+      ::selection {
+        background: rgba(212, 175, 55, 0.2);
+        color: #1A1A1A;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.05);
+      }
+      .ink-character {
+        display: inline-block;
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateY(2px);
+        animation: ink-spread 0.8s forwards ease-out;
+      }
+      @keyframes ink-spread {
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+      }
+      .ink-sync {
+        line-height: 1.625;
+        font-size: 1.25rem;
+        letter-spacing: -0.01em;
+      }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "three": "https://esm.sh/three@0.173.0",
+    "three/examples/jsm/loaders/SVGLoader.js": "https://esm.sh/three@0.173.0/examples/jsm/loaders/SVGLoader.js",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@9.0.0?external=three,react,react-dom",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@10.0.0?external=three,react,react-dom,@react-three/fiber",
+    "@react-three/cannon": "https://esm.sh/@react-three/cannon@6.6.0?external=three,react,react-dom,@react-three/fiber",
+    "framer-motion": "https://esm.sh/framer-motion@11.18.2?external=react,react-dom",
+    "@google/genai": "https://esm.sh/@google/genai@1.41.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "three/": "https://esm.sh/three@^0.182.0/"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+      <filter id="ink-jitter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" />
+        <feDisplacementMap in="SourceGraphic" scale="2" />
+      </filter>
+      <filter id="hand-drawn">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+      </filter>
+      <filter id="watercolor-bleed">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="5" result="noise" />
+        <feDisplacementMap in="blur" in2="noise" scale="10" />
+        <feComposite in="SourceGraphic" operator="atop" />
+      </filter>
+    </svg>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
