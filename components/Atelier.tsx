@@ -2,7 +2,8 @@
 import React, { useState, Suspense, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Physics } from '@react-three/cannon';
-import { OrbitControls, Environment, PerspectiveCamera, ContactShadows, EffectComposer, DepthOfField, Vignette, Noise } from '@react-three/drei';
+import { OrbitControls, Environment, PerspectiveCamera, ContactShadows } from '@react-three/drei';
+import { EffectComposer, DepthOfField, Vignette, Noise } from '@react-three/postprocessing';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import { FLOWERS } from '../constants';
@@ -30,14 +31,17 @@ const DollyZoomCamera = ({ count }: { count: number }) => {
   const CONSTANT_RATIO = initialZ * fovTan;
 
   useFrame(() => {
+    const perspectiveCamera = camera as THREE.PerspectiveCamera;
+    if (!perspectiveCamera) return;
+    
     const progress = THREE.MathUtils.clamp(count / 12, 0, 1);
     const targetFOV = THREE.MathUtils.lerp(initialFOV, 22, progress);
     const targetFovTan = Math.tan(THREE.MathUtils.degToRad(targetFOV / 2));
     const targetZ = CONSTANT_RATIO / targetFovTan;
 
-    camera.fov = THREE.MathUtils.lerp(camera.fov, targetFOV, 0.05);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.05);
-    camera.updateProjectionMatrix();
+    perspectiveCamera.fov = THREE.MathUtils.lerp(perspectiveCamera.fov, targetFOV, 0.05);
+    perspectiveCamera.position.z = THREE.MathUtils.lerp(perspectiveCamera.position.z, targetZ, 0.05);
+    perspectiveCamera.updateProjectionMatrix();
   });
 
   return null;
