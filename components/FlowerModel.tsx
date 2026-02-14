@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { FlowerData } from '../types';
-import { FLOWER_PATHS } from '../constants';
+import { FLOWER_ASSETS } from '../constants';
 
 interface FlowerModelProps {
   flower: FlowerData;
@@ -20,7 +20,7 @@ const MeshStandardMaterial = 'meshStandardMaterial' as any;
 const SphereGeometry = 'sphereGeometry' as any;
 const CylinderGeometry = 'cylinderGeometry' as any;
 
-const FlowerModel: React.FC<FlowerModelProps> = ({ flower, position }) => {
+const FlowerModel = ({ flower, position }: FlowerModelProps) => {
   const [ref] = useSphere(() => ({
     mass: 0.5,
     position,
@@ -34,10 +34,11 @@ const FlowerModel: React.FC<FlowerModelProps> = ({ flower, position }) => {
 
   const shapes = useMemo(() => {
     const loader = new SVGLoader();
-    const paths = FLOWER_PATHS[flower.id.toUpperCase() as keyof typeof FLOWER_PATHS];
+    const paths = FLOWER_ASSETS[flower.id.toUpperCase() as keyof typeof FLOWER_ASSETS];
     if (paths) {
       const pPetals = loader.parse(`<svg><path d="${paths.petals}"/></svg>`).paths[0];
-      const pCenter = loader.parse(`<svg><path d="${paths.center}"/></svg>`).paths[0];
+      const centerPath = 'center' in paths ? paths.center : paths.core;
+      const pCenter = loader.parse(`<svg><path d="${centerPath}"/></svg>`).paths[0];
       return {
         petals: pPetals.toShapes(true)[0],
         center: pCenter.toShapes(true)[0]
